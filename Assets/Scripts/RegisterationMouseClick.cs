@@ -3,11 +3,18 @@ using UnityEngine;
 
 public class RegisterationMouseClick : MonoBehaviour
 {
+    private int _idLeftMouseButton;
+
     public event Action MouseClick;
 
-    void Update()
+    private void Awake()
     {
-        if (Input.GetMouseButtonDown(0))
+        _idLeftMouseButton = 0;
+    }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(_idLeftMouseButton))
         {
             MouseClick?.Invoke();
         }

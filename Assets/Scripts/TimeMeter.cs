@@ -11,6 +11,7 @@ public class TimeMeter : MonoBehaviour
     private bool _isWork;
     private int _counter;
     private WaitForSeconds waitingTime;
+    private Coroutine _counterCoroutine;
 
     public event Action TimeChange;
 
@@ -37,11 +38,15 @@ public class TimeMeter : MonoBehaviour
 
         if (_isWork)
         {
-            StartCoroutine(IncreaseCounter(_delay));
+            _counterCoroutine = StartCoroutine(IncreaseCounter());
+        }
+        else
+        {
+            StopCoroutine(_counterCoroutine);
         }
     }
 
-    private IEnumerator IncreaseCounter(float delay)
+    private IEnumerator IncreaseCounter()
     {
         while (_isWork)
         {
