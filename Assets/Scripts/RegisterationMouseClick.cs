@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class RegisterMouseClick : MonoBehaviour
+public class RegisterationMouseClick : MonoBehaviour
 {
     public event Action MouseClick;
 

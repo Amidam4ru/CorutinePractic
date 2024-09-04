@@ -1,54 +1,37 @@
 using System.Collections;
-using UnityEngine;
+using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
 
 [RequireComponent(typeof(TextMeshProUGUI))]
+[RequireComponent(typeof(TimeMeter))]
 
 public class Counter : MonoBehaviour
 {
-    [SerializeField] private float _delay = 0.5f;
-    [SerializeField] private RegisterMouseClick _mouseClick;
-
-    private bool _isWork;
-    private int _counter;
+    private TimeMeter _timeMeter;
     private TextMeshProUGUI _text;
+    private int _counter;
 
-    private void Start()
+    private void Awake()
     {
         _text = GetComponent<TextMeshProUGUI>();
+        _timeMeter = GetComponent<TimeMeter>();
         _counter = 0;
-        _isWork = false;
     }
 
     private void OnEnable()
     {
-        _mouseClick.MouseClick += ChangeState;
+        _timeMeter.TimeChange += IncreaseCounter;
     }
 
     private void OnDisable()
     {
-        _mouseClick.MouseClick -= ChangeState;
+        _timeMeter.TimeChange -= IncreaseCounter;
     }
 
-    private void ChangeState()
+    private void IncreaseCounter()
     {
-        _isWork = !_isWork;
-
-        if (_isWork)
-        {
-            StartCoroutine(IncreaseCounter(_delay));
-        }
-    }
-
-    private IEnumerator IncreaseCounter(float delay)
-    {
-        WaitForSeconds wait = new WaitForSeconds(delay);
-        while (_isWork)
-        {
-            _counter++;
-            _text.text = "Counter: " + _counter.ToString();
-            
-            yield return wait;
-        }
+        _counter++;
+        _text.text = "Counter: " + _counter.ToString();
     }
 }
